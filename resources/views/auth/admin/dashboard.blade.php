@@ -29,6 +29,11 @@
                         <span>📊</span>
                         <a href="#" class="hover:text-gray-300">Rekap Data</a>
                     </li>
+                    <li class="mb-4 flex items-center space-x-2">
+                        <span>👤</span>
+                        <a href="{{ route('admin.users') }}" class="hover:text-gray-300">Manajemen Akun</a>
+                    </li>
+                    
                 </ul>
             </nav>
         </aside>

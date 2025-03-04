@@ -8,6 +8,28 @@
         <h2 class="text-blue-600 font-bold text-lg">LOGIN AKUN</h2>
         <h1 class="text-2xl font-bold text-gray-900">QUALITY AND SAFETY</h1>
 
+        <!-- Notifikasi Popup -->
+        @if(session('success'))
+        <div id="successPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h2 class="text-green-600 text-lg font-bold">Berhasil!</h2>
+                <p class="text-gray-700">{{ session('success') }}</p>
+                <button onclick="closePopup()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg">OK</button>
+            </div>
+        </div>
+        <script>
+            function closePopup() {
+                document.getElementById('successPopup').style.display = 'none';
+            }
+
+            // Hilangkan popup otomatis setelah 3 detik
+            setTimeout(() => {
+                document.getElementById('successPopup').style.display = 'none';
+            }, 3000);
+        </script>
+        @endif
+
+        <!-- Notifikasi Error -->
         @if (session('error'))
             <div class="bg-red-500 text-white p-2 rounded-md mt-2 text-sm">
                 {{ session('error') }}
@@ -37,4 +59,5 @@
         </form>
     </div>
 </div>
+
 @endsection
