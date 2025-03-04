@@ -29,7 +29,7 @@
             <div class="mt-6">
                 <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700">Daftar</button>
                 <button type="reset" class="w-full mt-2 border border-blue-600 text-blue-600 font-semibold py-2 rounded-lg hover:bg-blue-100">Reset</button>
-                <a href="{{ url('/') }}" class="w-full block mt-2 bg-green-600 text-white text-center font-semibold py-2 rounded-lg hover:bg-green-700">home</a>
+                <a href="{{ url('/') }}" class="w-full block mt-2 bg-green-600 text-white text-center font-semibold py-2 rounded-lg hover:bg-green-700">Home</a>
             </div>
         </form>
     </div>
