@@ -71,5 +71,7 @@
         <a href="{{ url('/') }}" class="w-full block mt-2 bg-green-600 text-white text-center font-semibold py-2 rounded-lg hover:bg-green-700">HOME</a>
     </div>
 </form>
+</div>
+</div>
 
 @endsection

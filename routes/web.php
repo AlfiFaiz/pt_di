@@ -82,6 +82,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     Route::post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'])->name('admin.users.update');
 });
+Route::get('auth/customer/progress', function () {
+    return view('progress');
+})->name('progress');
+
 
 
 
