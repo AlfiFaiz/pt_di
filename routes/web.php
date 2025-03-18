@@ -32,6 +32,21 @@ Route::get('/capabilities', function () {
 Route::get('/certificates', function () {
     return view('certificates');
 })->name('certificates');
+Route::get('auth/customer/qms', function () {
+    return view('auth/customer/qms');
+})->name('auth/customer/qms');
+Route::get('auth/customer/project', function () {
+    return view('auth/customer/project');
+})->name('auth/customer/project');
+Route::get('auth/customer/audit', function () {
+    return view('auth/customer/audit');
+})->name('auth/customer/audit');
+Route::get('auth/customer/info', function () {
+    return view('auth/customer/info');
+})->name('auth/customer/info');
+Route::get('auth/customer/qms/form', function () {
+    return view('auth/customer/qms/form');
+})->name('auth/customer/qms/form');
 
 
 Route::get('/register', function () {
@@ -55,7 +70,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer', [CustomerController::class, 'index'])->name('auth/customer/dashboard');
+    Route::get('/customer', [CustomerController::class, 'index'])->name('auth/customer/qms');
 });
 
 Route::post('/logout', function () {
@@ -83,9 +98,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'])->name('admin.users.update');
 });
 Route::get('auth/customer/progress', function () {
-    return view('progress');
+    return view('auth/customer/progress');
 })->name('progress');
-
 
 
 

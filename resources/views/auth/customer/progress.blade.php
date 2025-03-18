@@ -26,8 +26,12 @@
         </div>
 
         <!-- Progress Bar -->
-        <div class="flex justify-center items-center mt-10">
+        <div class="flex flex-col justify-center items-center mt-10">
             <canvas id="progressChart" width="300" height="150"></canvas>
+            <!-- Menampilkan persentase di bawah chart -->
+            <div id="progressText" class="mt-4 text-xl font-bold text-white">
+                {{ $progressValue }}%
+            </div>
         </div>
     
         <!-- Tabel -->
@@ -58,10 +62,7 @@
                 Detail
             </button>
         </div>
-        @php
-        $progressValue = 15;//Ubah angka ini sesuai keinginan
-    @endphp
-    
+        
         <!-- Script untuk Chart.js -->
         <script>
             var ctx = document.getElementById('progressChart').getContext('2d');
@@ -94,6 +95,9 @@
                     }
                 }
             });
+
+            // Update text di bawah progress bar
+            document.getElementById("progressText").innerText = progressValue + "%";
         </script>
     
     </body>

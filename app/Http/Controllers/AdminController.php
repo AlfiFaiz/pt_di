@@ -37,7 +37,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-            'role' => 'required|in:user,admin', // Hanya menerima 'user' atau 'admin'
+            'role' => 'required|in:Customer,admin', // Hanya menerima 'user' atau 'admin'
         ]);
         
     

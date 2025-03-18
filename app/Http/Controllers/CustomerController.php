@@ -7,6 +7,6 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return view('auth/customer/dashboard');
+        return view('auth/customer/qms');
     }
 }

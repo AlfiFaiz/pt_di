@@ -94,7 +94,7 @@
                     <input type="email" id="editEmail" name="email" class="w-full p-2 border rounded">
                 </div>
                 <select id="editRole" name="role" class="w-full p-2 border rounded">
-                    <option value='User'>User</option>
+                    <option value='Customer'>Customer</option>
                     <option value='admin'>Admin</option>
                 </select>
                 

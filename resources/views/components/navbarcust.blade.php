@@ -23,10 +23,11 @@
             <!-- Menu Navigasi -->
             <div id="menu" class="hidden md:flex md:space-x-6">
                
-                <a href="{{ route('auth/customer/dashboard') }}" class="hover:underline">Home</a>
-                <a href="{{ route('abot') }}" class="hover:underline">About Us</a>
-                <a href="{{ route('capabilities') }}" class="hover:underline">Capabilities</a>
-                <a href="{{ route('certificates') }}" class="hover:underline">Certificates</a>
+                
+                <a href="{{ route('auth/customer/qms') }}" class="hover:underline">QMS</a>
+                <a href="{{ route('auth/customer/project') }}" class="hover:underline">Project</a>
+                <a href="{{ route('auth/customer/audit') }}" class="hover:underline">Audit</a>
+                <a href="{{ route('auth/customer/info') }}" class="hover:underline">Info</a>
             </div>
 
             <div class="relative">
@@ -57,10 +58,11 @@
             </button>
 
             <div class="flex flex-col space-y-6 text-center">
-                <a href="{{ route('home') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Home</a>
-                <a href="{{ route('about') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">About Us</a>
-                <a href="{{ route('capabilities') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Capabilities</a>
-                <a href="{{ route('certificates') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Certificates</a>
+ 
+                <a href="{{ route('auth/customer/qms') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">QMS</a>
+                <a href="{{ route('auth/customer/project') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Project</a>
+                <a href="{{ route('auth/customer/audit') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Audit</a>
+                <a href="{{ route('auth/customer/info') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Info</a>
             </div>
 
             <!-- Tombol Dropdown Mobile -->
