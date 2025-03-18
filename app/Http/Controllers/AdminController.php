@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\User;
 
 class AdminController extends Controller
@@ -11,6 +12,9 @@ class AdminController extends Controller
     {
         return view('auth/admin/dashboard');
     }
+
+
+
 
     public function manageUsers()
     {
@@ -49,6 +53,7 @@ class AdminController extends Controller
     
         return redirect()->route('admin.users')->with('success', 'Data berhasil diperbarui.');
     }
+    
     
     
     

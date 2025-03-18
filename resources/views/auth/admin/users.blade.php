@@ -12,32 +12,11 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-gradient-to-b from-blue-900 to-blue-700 p-5 text-white">
-            <h1 class="text-xl font-bold">Admin</h1>
-            <nav class="mt-6">
-                <ul>
-                    <li class="mb-4 flex items-center space-x-2">
-                        <span>📌</span>
-                        <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-300">Tentang Dashboard</a>
-                    </li>
-                    <li class="mb-4 flex items-center space-x-2">
-                        <span>📂</span>
-                        <a href="#" class="hover:text-gray-300">Tambah Data</a>
-                    </li>
-                    <li class="mb-4 flex items-center space-x-2">
-                        <span>📊</span>
-                        <a href="#" class="hover:text-gray-300">Rekap Data</a>
-                    </li>
-                    <li class="mb-4 flex items-center space-x-2">
-                        <span>👤</span>
-                        <a href="{{ route('admin.users') }}" class="hover:text-gray-300">Manajemen Akun</a>
-                    </li>
-                    
-                </ul>
-            </nav>
-        </aside>
-
+        @include('components.sidebaradmin')
+        
+        
+        <div class="flex-1 p-6">
+            @include('components.headeradmin')
         <div class="p-6">
         <h2 class="text-2xl font-bold">Manajemen Akun</h2>
     
@@ -119,6 +98,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
     </div>
     

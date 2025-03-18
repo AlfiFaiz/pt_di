@@ -51,8 +51,12 @@
         
         <div class="mt-4">
             <p class="text-lg font-semibold">📧 Email:</p>
-            <p class="text-blue-400">marketing-ptdi@indonesian-aerospace.com</p>
-            <p class="text-blue-400">sekretariat-ptdi@indonesian-aerospace.com</p>
+            <a href="mailto:marketing-ptdi@indonesian-aerospace.com" class="hover:underline text-blue-400">
+                marketing-ptdi@indonesian-aerospace.com
+            </a><br>
+            <a href="mailto:sekretariat-ptdi@indonesian-aerospace.com" class="hover:underline text-blue-400">
+                sekretariat-ptdi@indonesian-aerospace.com
+            </a>
         </div>
 
         <div class="mt-4">

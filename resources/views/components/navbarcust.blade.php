@@ -24,7 +24,7 @@
             <div id="menu" class="hidden md:flex md:space-x-6">
                
                 
-                <a href="{{ route('auth/customer/qms') }}" class="hover:underline">QMS</a>
+                <a href="{{ route('auth/customer/qms/form') }}" class="hover:underline">QMS</a>
                 <a href="{{ route('auth/customer/project') }}" class="hover:underline">Project</a>
                 <a href="{{ route('auth/customer/audit') }}" class="hover:underline">Audit</a>
                 <a href="{{ route('auth/customer/info') }}" class="hover:underline">Info</a>
@@ -59,7 +59,7 @@
 
             <div class="flex flex-col space-y-6 text-center">
  
-                <a href="{{ route('auth/customer/qms') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">QMS</a>
+                <a href="{{ route('auth/customer/qms/form') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">QMS</a>
                 <a href="{{ route('auth/customer/project') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Project</a>
                 <a href="{{ route('auth/customer/audit') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Audit</a>
                 <a href="{{ route('auth/customer/info') }}" class="text-white text-2xl font-semibold hover:text-gray-300 transition duration-200">Info</a>

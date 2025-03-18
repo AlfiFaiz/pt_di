@@ -22,7 +22,7 @@ class LoginController extends Controller
             if ($user->role === 'admin') {
                 return redirect()->route('auth/admin/dashboard');
             } elseif ($user->role === 'customer') {
-                return redirect()->route('auth/customer/qms');
+                return redirect()->route('auth/customer/qms/form');
             } else {
                 Auth::logout();
                 return redirect()->route('login')->with('error', 'Akun tidak memiliki role yang valid.');

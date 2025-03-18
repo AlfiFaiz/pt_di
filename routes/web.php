@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\CustomerFormController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -48,10 +50,16 @@ Route::get('auth/customer/qms/form', function () {
     return view('auth/customer/qms/form');
 })->name('auth/customer/qms/form');
 
+Route::get('/admin/qms/form', function () {
+    return view('auth.admin.qms.form'); // Sesuaikan dengan struktur folder
+})->name('admin.qms.form');
 
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
+
+
 
 // Dashboard berdasarkan roleAuth::routes();
 
@@ -70,7 +78,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer', [CustomerController::class, 'index'])->name('auth/customer/qms');
+    Route::get('/customer', [CustomerFormController::class, 'index'])->name('auth/customer/qms/form');
 });
 
 Route::post('/logout', function () {
@@ -97,6 +105,25 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     Route::post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'])->name('admin.users.update');
 });
+
+
+
+Route::prefix('admin/qms')->group(function () {
+    Route::get('/form', [FormController::class, 'index'])->name('admin.qms.form');
+    Route::get('/form/create', [FormController::class, 'create'])->name('admin.qms.form.create');
+    Route::post('/form', [FormController::class, 'store'])->name('admin.qms.form.store');
+    Route::get('/form/{form}/edit', [FormController::class, 'edit'])->name('admin.qms.form.edit');
+    Route::put('/form/{form}', [FormController::class, 'update'])->name('admin.qms.form.update');
+    Route::delete('/form/{form}', [FormController::class, 'destroy'])->name('admin.qms.form.destroy');
+});
+
+// Admin QMS Form Routes
+
+
+// Customer QMS Form Routes
+Route::get('/customer/qms/form', [CustomerFormController::class, 'index'])->name('auth/customer/qms/form');
+
+
 Route::get('auth/customer/progress', function () {
     return view('auth/customer/progress');
 })->name('progress');
