@@ -6,7 +6,7 @@
             <li class="mb-2">
                 <div class="flex items-center space-x-2">
                     <span>📌</span>
-                    <a href="{{ route('auth/admin/dashboard') }}" class="hover:text-gray-300">Tentang Dashboard</a>
+                    <a href="{{ route('auth.admin.dashboard') }}" class="hover:text-gray-300">Tentang Dashboard</a>
                 </div>
             </li>
 
@@ -17,7 +17,7 @@
                         <span>📂</span>
                         <span>QMS</span>
                     </div>
-                    <span id="qmsFormArrow">🔽</span>
+                    <span id="qmsFormMenuArrow">🔽</span>
                 </div>
                 <ul id="qmsFormMenu" class="ml-6 mt-2 hidden">
                     <li class="mb-2 flex items-center space-x-2">
@@ -31,7 +31,7 @@
             <li class="mb-2">
                 <div class="flex items-center space-x-2">
                     <span>📊</span>
-                    <a href="#" class="hover:text-gray-300">Rekap Data</a>
+                    <a href="{{ route('admin.aircrafts.index') }}" class="hover:text-gray-300">Project Pesawat</a>
                 </div>
             </li>
 
@@ -42,7 +42,7 @@
                         <span>👤</span>
                         <span>Manajemen Akun</span>
                     </div>
-                    <span id="userArrow">🔽</span>
+                    <span id="userMenuArrow">🔽</span>
                 </div>
                 <ul id="userMenu" class="ml-6 mt-2 hidden">
                     <li class="mb-2 flex items-center space-x-2">

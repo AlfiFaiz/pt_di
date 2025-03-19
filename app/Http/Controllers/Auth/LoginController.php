@@ -20,7 +20,7 @@ class LoginController extends Controller
 
             // Cek role dan redirect ke halaman yang sesuai
             if ($user->role === 'admin') {
-                return redirect()->route('auth/admin/dashboard');
+                return redirect()->route('auth.admin.dashboard');
             } elseif ($user->role === 'customer') {
                 return redirect()->route('auth/customer/qms/form');
             } else {

@@ -11,7 +11,9 @@ class FormController extends Controller
     // Menampilkan daftar form
     public function index()
     {
-        $forms = Form::all();
+        $limit = request('limit', 5); // Default 5 jika tidak dipilih
+$forms = Form::paginate($limit == 'all' ? Form::count() : $limit);
+
         return view('auth.admin.qms.form', compact('forms'));
     }
 
@@ -116,10 +118,5 @@ class FormController extends Controller
         return redirect()->route('admin.qms.form')->with('success', 'Form berhasil dihapus!');
     }
 
-    // Menampilkan daftar form untuk customer
-    public function custview()
-    {
-        $forms = Form::all();
-        return view('auth.customer.qms.form', compact('forms'));
-    }
+
 }

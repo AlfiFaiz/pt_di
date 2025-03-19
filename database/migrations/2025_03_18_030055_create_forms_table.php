@@ -11,18 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('forms', function (Blueprint $table) {
-            $table->id();
-            $table->string('nomor')->unique();
-            $table->string('judul');
-            $table->date('date_issued');
-            $table->string('org');
-            $table->integer('rev');
-            $table->integer('amend')->nullable();
-            $table->string('affected_function');
-            $table->string('file_path'); // Menyimpan path file
-            $table->timestamps();
-        });
+       
     }
     
 
