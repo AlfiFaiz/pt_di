@@ -45,39 +45,40 @@
                     </thead>
                     <tbody>
                         @foreach ($group as $index => $order)
-                            <tr>
-                                <td class="border px-2 py-1">{{ $index + 1 }}</td>
-                                <td class="border px-2 py-1">
-                                    <input type="text" value="{{ $order->engineering_order_no }}" 
-                                        class="editable border border-gray-300 p-1 w-full text-xs"
-                                        data-id="{{ $order->id }}" data-field="engineering_order_no">
-                                </td>
-                                <td class="border px-2 py-1">
-                                    <input type="text" value="{{ $order->subject_title }}" 
-                                        class="editable border border-gray-300 p-1 w-full text-xs"
-                                        data-id="{{ $order->id }}" data-field="subject_title">
-                                </td>
-                                <td class="border px-2 py-1">
-                                    <input type="date" value="{{ $order->start_date }}" 
-                                        class="editable border border-gray-300 p-1 w-full text-xs"
-                                        data-id="{{ $order->id }}" data-field="start_date">
-                                </td>
-                                <td class="border px-2 py-1">
-                                    <input type="date" value="{{ $order->finish_date }}" 
-                                        class="editable border border-gray-300 p-1 w-full text-xs"
-                                        data-id="{{ $order->id }}" data-field="finish_date">
-                                </td>
-                                <td class="border px-2 py-1">
-                                    <input type="text" value="{{ $order->insp_stamp }}" 
-                                        class="editable border border-gray-300 p-1 w-full text-xs"
-                                        data-id="{{ $order->id }}" data-field="insp_stamp">
-                                </td>
-                                <td class="border px-2 py-1">
-                                    <button class="delete-order bg-red-500 text-white px-2 py-1 text-xs rounded" 
-                                        data-id="{{ $order->id }}">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
+    <tr>
+        <td class="border px-2 py-1">{{ $index + 1 }}</td>
+        <td class="border px-2 py-1">
+            <input type="text" value="{{ $order->engineering_order_no }}" 
+                class="editable border border-gray-300 p-1 w-full text-xs"
+                data-id="{{ $order->id }}" data-field="engineering_order_no">
+        </td>
+        <td class="border px-2 py-1">
+            <input type="text" value="{{ $order->subject_title }}" 
+                class="editable border border-gray-300 p-1 w-full text-xs"
+                data-id="{{ $order->id }}" data-field="subject_title">
+        </td>
+        <td class="border px-2 py-1">
+            <input type="date" value="{{ $order->start_date ?? '' }}" 
+                class="editable border border-gray-300 p-1 w-full text-xs"
+                data-id="{{ $order->id }}" data-field="start_date">
+        </td>
+        <td class="border px-2 py-1">
+            <input type="date" value="{{ $order->finish_date ?? '' }}" 
+                class="editable border border-gray-300 p-1 w-full text-xs"
+                data-id="{{ $order->id }}" data-field="finish_date">
+        </td>
+        <td class="border px-2 py-1">
+            <input type="text" value="{{ $order->insp_stamp ?? '' }}" 
+                class="editable border border-gray-300 p-1 w-full text-xs"
+                data-id="{{ $order->id }}" data-field="insp_stamp">
+        </td>
+        <td class="border px-2 py-1">
+            <button class="delete-order bg-red-500 text-white px-2 py-1 text-xs rounded" 
+                data-id="{{ $order->id }}">Hapus</button>
+        </td>
+    </tr>
+@endforeach
+
                     </tbody>
                 </table>
             @endforeach
