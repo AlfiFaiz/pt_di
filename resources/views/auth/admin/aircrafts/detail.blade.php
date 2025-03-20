@@ -19,6 +19,11 @@
     <!-- Engineering Orders -->
     <div class="bg-white shadow-md rounded-lg p-6 mt-6 text-sm">
         <h3 class="text-lg font-bold mb-4">Engineering Orders</h3>
+        <!-- Tombol Tambah Data -->
+<button id="open-modal" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800 mb-4">
+    Tambah Data
+</button>
+
 
         <div class="overflow-auto max-h-[400px] border border-gray-300 p-2">
             @foreach ($orders->groupBy('type_order') as $type => $group)
@@ -89,6 +94,30 @@
         </button>
     </div>
 </div>
+<!-- MODAL FORM -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-md w-1/3">
+        <h3 class="text-xl font-bold mb-4">Tambah Engineering Order</h3>
+
+        <input type="text" id="order_no" placeholder="Engineering Order No" class="w-full p-2 border rounded mb-2" required>
+        <input type="text" id="subject_title" placeholder="Subject Title" class="w-full p-2 border rounded mb-2" required>
+        <input type="date" id="start_date" class="w-full p-2 border rounded mb-2" required>
+
+        <select id="type_order" class="w-full p-2 border rounded mb-2" required>
+            <option value="Basic Re-assy and Functional Test">Basic Re-assy and Functional Test</option>
+            <option value="Customizing Functional Test">Customizing Functional Test</option>
+            <option value="Flight Line">Flight Line</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="SB, ASB, AND EASB">SB, ASB, AND EASB</option>
+        </select>
+
+        <div class="flex justify-end">
+            <button id="close-modal" class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Batal</button>
+            <button id="add-order" class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
+        </div>
+    </div>
+</div>
+
 
 <!-- AJAX Update -->
 <script>
@@ -125,6 +154,79 @@ document.querySelectorAll(".delete-order").forEach(button => {
             alert("Data berhasil dihapus!");
             this.closest("tr").remove();
         }).catch(error => console.log("Error:", error));
+    });
+});
+
+document.getElementById("open-modal").addEventListener("click", function () {
+    document.getElementById("modal").classList.remove("hidden");
+});
+
+document.getElementById("close-modal").addEventListener("click", function () {
+    document.getElementById("modal").classList.add("hidden");
+});
+
+document.getElementById("add-order").addEventListener("click", function () {
+    let orderNo = document.getElementById("order_no").value.trim();
+    let subjectTitle = document.getElementById("subject_title").value.trim();
+    let startDate = document.getElementById("start_date").value;
+    let typeOrder = document.getElementById("type_order").value;
+    let aircraftId = "{{ $aircraft->id }}"; // ID Pesawat
+
+    if (!orderNo || !subjectTitle || !startDate || !typeOrder) {
+        alert("Semua field harus diisi!");
+        return;
+    }
+
+    fetch(`/admin/orders/store`, {
+        method: "POST",
+        headers: { 
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+            engineering_order_no: orderNo, 
+            subject_title: subjectTitle, 
+            start_date: startDate, 
+            type_order: typeOrder, 
+            aircraft_id: aircraftId 
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Data berhasil ditambahkan!");
+
+            // Tambahkan ke tabel tanpa reload
+            let table = document.querySelector(`tbody`);
+            let newRow = `
+                <tr>
+                    <td class="border px-2 py-1">${data.order.id}</td>
+                    <td class="border px-2 py-1">${data.order.engineering_order_no}</td>
+                    <td class="border px-2 py-1">${data.order.subject_title}</td>
+                    <td class="border px-2 py-1">${data.order.start_date}</td>
+                    <td class="border px-2 py-1"></td>
+                    <td class="border px-2 py-1"></td>
+                    <td class="border px-2 py-1">
+                        <button class="delete-order bg-red-500 text-white px-2 py-1 text-xs rounded" 
+                            data-id="${data.order.id}">Hapus</button>
+                    </td>
+                </tr>
+            `;
+            table.insertAdjacentHTML('beforeend', newRow);
+
+            // Reset Form & Tutup Modal
+            document.getElementById("order_no").value = "";
+            document.getElementById("subject_title").value = "";
+            document.getElementById("start_date").value = "";
+            document.getElementById("type_order").value = "Basic Re-assy and Functional Test";
+            document.getElementById("modal").classList.add("hidden");
+        } else {
+            alert("Gagal menambahkan data: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Terjadi kesalahan saat menyimpan data.");
     });
 });
 

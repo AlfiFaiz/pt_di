@@ -25,6 +25,29 @@ class EngineeringOrderController extends Controller
 
         return $pdf->download('engineering_orders.pdf');
     }
+    public function store(Request $request) {
+        $request->validate([
+            'engineering_order_no' => 'required|string|max:255',
+            'subject_title' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'type_order' => 'required|string',
+            'aircraft_id' => 'required|exists:aircraft_programs,id',
+        ]);
+    
+        $order = EngineeringOrder::create([
+            'engineering_order_no' => $request->engineering_order_no,
+            'subject_title' => $request->subject_title,
+            'start_date' => $request->start_date,
+            'type_order' => $request->type_order,
+            'aircraft_id' => $request->aircraft_id,
+        ]);
+    
+        return response()->json([
+            'success' => true,
+            'order' => $order
+        ]);
+    }
+    
       // Update Engineering Order
       public function update(Request $request, $id)
       {
