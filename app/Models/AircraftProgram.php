@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class AircraftProgram extends Model
 {
-    protected $fillable = ['program', 'aircraft_type', 'registration', 'customer', 'image'];
+    use HasFactory;
 
-    public function orders()
+    protected $fillable = [
+        'program', 'aircraft_type', 'registration', 'customer', 'image'
+    ];
+
+    // Relasi ke EngineeringOrder
+    public function engineeringOrders()
     {
         return $this->hasMany(EngineeringOrder::class, 'aircraft_id');
     }

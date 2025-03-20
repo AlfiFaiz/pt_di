@@ -2,17 +2,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\EngineeringOrder;
+use App\Models\AircraftProgram;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class EngineeringOrderController extends Controller
 {
     public function downloadPDF($id)
     {
-        $orders = EngineeringOrder::where('aircraft_id', $id)->get();
-        $aircraft = $orders->first()->aircraft ?? null; // Ambil informasi pesawat
+        // Ambil data Aircraft dan Engineering Orders terkait
+        $aircraft = AircraftProgram::with('engineeringOrders')->find($id);
 
-        $pdf = Pdf::loadView('pdf.engineering_orders', compact('orders', 'aircraft'));
+        if (!$aircraft) {
+            abort(404, 'Aircraft Program tidak ditemukan.');
+        }
+
+        // Data Engineering Orders terkait
+        $orders = $aircraft->engineeringOrders;
+
+        // Generate PDF
+        $pdf = Pdf::loadView('pdf.engineering_orders', compact('aircraft', 'orders'));
+
         return $pdf->download('engineering_orders.pdf');
     }
 }

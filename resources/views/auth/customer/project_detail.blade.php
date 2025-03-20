@@ -9,6 +9,19 @@
             <h1 class="text-3xl font-extrabold">Engineering Orders for {{ $aircraft->aircraft_type }}</h1>
             <p class="text-lg">{{ $aircraft->registration }} - {{ $aircraft->customer }}</p>
         </div>
+        @php
+   
+        $totalOrders = $orders->count();
+        $completedOrders = $orders->whereNotNull('finish_date')->whereNotNull('insp_stamp')->count();
+        $progressPercentage = ($totalOrders > 0) ? round(($completedOrders / $totalOrders) * 100, 2) : 0;
+    @endphp
+
+<div class="flex-1">
+    <div class="w-full bg-gray-700 rounded-full h-4">
+        <div class="bg-green-500 h-4 rounded-full transition-all duration-300" style="width: {{ $progressPercentage }}%;"></div>
+    </div>
+    <p class="text-xs text-white mt-1 text-right">{{ $progressPercentage }}%</p>
+</div>
 
         <!-- Wrapper Scroll -->
         <div class="mt-6 bg-white p-4 rounded-lg shadow-lg">
