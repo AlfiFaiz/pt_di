@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+<div class="max-w-6xl mx-auto bg-white shadow-md rounded-lg p-6">
     <h2 class="text-2xl font-bold mb-4">Tambah Data Aircraft</h2>
 
     @if ($errors->any())
@@ -15,85 +15,160 @@
         </div>
     @endif
 
-    <form action="{{ route('aircrafts.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+    <form action="{{ route('aircrafts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div>
-            <label for="program" class="block font-medium">Program</label>
-            <input type="text" name="program" id="program" class="w-full p-2 border rounded" required>
-        </div>
+        <div class="grid grid-cols-2 gap-6">
+            <!-- Bagian Kiri: Data Pesawat -->
+            <div class="bg-gray-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Data Pesawat</h3>
 
-        <div>
-            <label for="aircraft_type" class="block font-medium">Tipe Pesawat</label>
-            <input type="text" name="aircraft_type" id="aircraft_type" class="w-full p-2 border rounded" required>
-        </div>
+                <div class="mb-4">
+                    <label for="program" class="block font-medium">Program</label>
+                    <input type="text" name="program" id="program" class="w-full p-2 border rounded" required>
+                </div>
 
-        <div>
-            <label for="registration" class="block font-medium">Registrasi</label>
-            <input type="text" name="registration" id="registration" class="w-full p-2 border rounded" required>
-        </div>
+                <div class="mb-4">
+                    <label for="aircraft_type" class="block font-medium">Tipe Pesawat</label>
+                    <input type="text" name="aircraft_type" id="aircraft_type" class="w-full p-2 border rounded" required>
+                </div>
 
-        <div>
-            <label for="customer" class="block font-medium">Customer</label>
-            <input type="text" name="customer" id="customer" class="w-full p-2 border rounded" required>
-        </div>
+                <div class="mb-4">
+                    <label for="registration" class="block font-medium">Registrasi</label>
+                    <input type="text" name="registration" id="registration" class="w-full p-2 border rounded" required>
+                </div>
 
-        <div>
-            <label for="gambar" class="block font-medium">Upload Gambar</label>
-            <input type="file" name="gambar" id="gambar" class="w-full p-2 border rounded">
-        </div>
+                <div class="mb-4">
+                    <label for="customer" class="block font-medium">Customer</label>
+                    <input type="text" name="customer" id="customer" class="w-full p-2 border rounded" required>
+                </div>
 
-        <h3 class="text-xl font-bold mt-6">Engineering Orders</h3>
-        <div id="engineering-orders-container">
-            <div class="engineering-order space-y-2 border p-4 rounded bg-gray-100">
-                <input type="text" name="engineering_orders[0][engineering_order_no]" placeholder="Engineering Order No" class="w-full p-2 border rounded" required>
-                <input type="text" name="engineering_orders[0][subject_title]" placeholder="Subject Title" class="w-full p-2 border rounded" required>
-                <input type="date" name="engineering_orders[0][start_date]" class="w-full p-2 border rounded" required>
-               
-                <select name="engineering_orders[0][type_order]" class="w-full p-2 border rounded" required>
-                    <option value="Basic Re-assy and Functional Test">Basic Re-assy and Functional Test</option>
-                    <option value="Customizing Functional Test">Customizing Functional Test</option>
-                    <option value="Flight Line">Flight Line</option>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="SB, ASB, AND EASB">SB, ASB, AND EASB</option>
-                </select>
-                
-                <button type="button" class="remove-order px-2 py-1 bg-red-600 text-white rounded">Hapus</button>
+                <div>
+                    <label for="gambar" class="block font-medium">Upload Gambar</label>
+                    <input type="file" name="gambar" id="gambar" class="w-full p-2 border rounded">
+                </div>
+            </div>
+
+            <!-- Bagian Kanan: Engineering Orders -->
+            <div class="bg-gray-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Engineering Orders</h3>
+
+                <button type="button" id="open-modal" class="px-4 py-2 bg-green-600 text-white rounded">
+                    Tambah Engineering Order
+                </button>
+
+                <!-- Tabel Rekap Engineering Orders -->
+                <div class="mt-4 overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="border p-2">No Order</th>
+                                <th class="border p-2">Subject Title</th>
+                                <th class="border p-2">Tanggal Mulai</th>
+                                <th class="border p-2">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="engineering-orders-table">
+                            <!-- Data Engineering Orders akan muncul di sini -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <button type="button" id="add-order" class="px-4 py-2 bg-green-600 text-white rounded">Tambah Engineering Order</button>
-
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
+        <div class="mt-6 text-center">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
+        </div>
     </form>
 </div>
 
+<!-- MODAL FORM -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-md w-1/3">
+        <h3 class="text-xl font-bold mb-4">Tambah Engineering Order</h3>
+
+        <input type="text" id="engineering_order_no" placeholder="Engineering Order No" class="w-full p-2 border rounded mb-2" required>
+        <input type="text" id="subject_title" placeholder="Subject Title" class="w-full p-2 border rounded mb-2" required>
+        <input type="date" id="start_date" class="w-full p-2 border rounded mb-2" required>
+
+        <select id="type_order" class="w-full p-2 border rounded mb-2" required>
+            <option value="Basic Re-assy and Functional Test">Basic Re-assy and Functional Test</option>
+            <option value="Customizing Functional Test">Customizing Functional Test</option>
+            <option value="Flight Line">Flight Line</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="SB, ASB, AND EASB">SB, ASB, AND EASB</option>
+        </select>
+
+        <div class="flex justify-end">
+            <button id="close-modal" class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Batal</button>
+            <button id="save-order" class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
+        </div>
+    </div>
+</div>
+<form action="{{ route('aircrafts.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+
+    <input type="hidden" name="engineering_orders" id="engineering_orders">
+
+    <!-- Bagian lainnya tetap sama -->
+</form>
+
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let orderIndex = 1;
+document.addEventListener("DOMContentLoaded", function () {
+    let engineeringOrders = [];
+    const modal = document.getElementById("modal");
+    const openModalBtn = document.getElementById("open-modal");
+    const closeModalBtn = document.getElementById("close-modal");
+    const saveOrderBtn = document.getElementById("save-order");
+    const tableBody = document.getElementById("engineering-orders-table");
+    const hiddenInput = document.getElementById("engineering_orders");
 
-        document.getElementById("add-order").addEventListener("click", function () {
-            let container = document.getElementById("engineering-orders-container");
-            let newOrder = document.createElement("div");
-            newOrder.classList.add("engineering-order", "space-y-2", "border", "p-4", "rounded", "bg-gray-100");
-            newOrder.innerHTML = `
-                <input type="text" name="engineering_orders[${orderIndex}][engineering_order_no]" placeholder="Engineering Order No" class="w-full p-2 border rounded" required>
-                <input type="text" name="engineering_orders[${orderIndex}][subject_title]" placeholder="Subject Title" class="w-full p-2 border rounded" required>
-                <input type="date" name="engineering_orders[${orderIndex}][start_date]" class="w-full p-2 border rounded" required>
-                <input type="date" name="engineering_orders[${orderIndex}][finish_date]" class="w-full p-2 border rounded" required>
-                <input type="text" name="engineering_orders[${orderIndex}][type_order]" placeholder="Type Order" class="w-full p-2 border rounded" required>
-                <input type="text" name="engineering_orders[${orderIndex}][insp_stamp]" placeholder="Inspection Stamp" class="w-full p-2 border rounded" required>
-                <button type="button" class="remove-order px-2 py-1 bg-red-600 text-white rounded">Hapus</button>
-            `;
-            container.appendChild(newOrder);
-            orderIndex++;
-        });
+    openModalBtn.addEventListener("click", function () {
+        modal.classList.remove("hidden");
+    });
 
-        document.getElementById("engineering-orders-container").addEventListener("click", function (e) {
-            if (e.target.classList.contains("remove-order")) {
-                e.target.parentElement.remove();
-            }
+    closeModalBtn.addEventListener("click", function () {
+        modal.classList.add("hidden");
+    });
+
+    saveOrderBtn.addEventListener("click", function () {
+        const orderNo = document.getElementById("engineering_order_no").value;
+        const subjectTitle = document.getElementById("subject_title").value;
+        const startDate = document.getElementById("start_date").value;
+
+        if (!orderNo || !subjectTitle || !startDate) {
+            alert("Mohon isi semua data!");
+            return;
+        }
+
+        const newOrder = { order_no: orderNo, subject_title: subjectTitle, start_date: startDate };
+        engineeringOrders.push(newOrder);
+
+        // Update input hidden sebelum submit
+        hiddenInput.value = JSON.stringify(engineeringOrders);
+
+        // Tambahkan ke tabel
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+            <td class="border p-2">${orderNo}</td>
+            <td class="border p-2">${subjectTitle}</td>
+            <td class="border p-2">${startDate}</td>
+            <td class="border p-2">
+                <button class="delete-order px-2 py-1 bg-red-600 text-white rounded">Hapus</button>
+            </td>
+        `;
+
+        tableBody.appendChild(newRow);
+        modal.classList.add("hidden");
+
+        newRow.querySelector(".delete-order").addEventListener("click", function () {
+            newRow.remove();
+            engineeringOrders = engineeringOrders.filter(o => o.order_no !== orderNo);
+            hiddenInput.value = JSON.stringify(engineeringOrders);
         });
     });
+});
+
 </script>
 @endsection

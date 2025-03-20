@@ -9,9 +9,12 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\CustomerFormController;
 use App\Http\Controllers\AdminAircraftController;
 use App\Http\Controllers\HomeController;
+use App\Models\EngineeringOrder;
+use App\Models\AircraftProgram;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AircraftProgramController;
-
+use App\Http\Controllers\EngineeringOrderController;
 // Halaman utama
 Route::get('/', function () {
     return view('home');
@@ -93,7 +96,8 @@ Route::get('auth/customer/progress', function () {
 })->name('progress');
 
 Route::get('/auth/customer/project', [AircraftProgramController::class, 'index'])->name('auth/customer/project');
-Route::get('/auth/customer/project/{id}', [AircraftProgramController::class, 'show'])->name('project.show');
+Route::get('/project/{id}', [AircraftProgramController::class, 'show'])->name('project.detail');
+
 
 Route::get('auth/customer/audit', function () {
     return view('auth/customer/audit');
@@ -101,3 +105,17 @@ Route::get('auth/customer/audit', function () {
 Route::get('auth/customer/info', function () {
     return view('auth/customer/info');
 })->name('auth/customer/info');
+
+
+
+
+Route::get('/project/{id}', function ($id) {
+    $aircraft = AircraftProgram::findOrFail($id);
+    $orders = EngineeringOrder::where('aircraft_id', $id)->get();
+    return view('auth/customer/project_detail', compact('aircraft', 'orders'));
+})->name('project.detail');
+
+
+
+Route::get('/engineering-orders/pdf/{id}', [EngineeringOrderController::class, 'downloadPDF'])->name('engineering-orders.pdf');
+
