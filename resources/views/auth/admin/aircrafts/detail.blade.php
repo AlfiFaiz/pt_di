@@ -5,16 +5,35 @@
     <h2 class="text-2xl font-bold mb-6">Detail Aircraft: {{ $aircraft->program }}</h2>
 
     <!-- Informasi Pesawat -->
-    <div class="bg-white shadow-md rounded-lg p-6 text-sm">
-        <h3 class="text-lg font-bold mb-4">Informasi Pesawat</h3>
-        <p><strong>Tipe:</strong> {{ $aircraft->aircraft_type }}</p>
-        <p><strong>Registrasi:</strong> {{ $aircraft->registration }}</p>
-        <p><strong>Customer:</strong> {{ $aircraft->customer }}</p>
+    <!-- Informasi Pesawat -->
+<div class="bg-white shadow-md rounded-lg p-6 text-sm">
+    <h3 class="text-lg font-bold mb-4">Informasi Pesawat</h3>
 
-        <div class="mt-4">
-            <img src="{{ asset('storage/' . $aircraft->image) }}" alt="Gambar Pesawat" class="w-48 h-auto rounded">
-        </div>
+    <label class="block"><strong>Program:</strong></label>
+    <input type="text" value="{{ $aircraft->program }}" 
+           class="aircraft-edit border border-gray-300 p-1 w-full text-xs"
+           data-id="{{ $aircraft->id }}" data-field="program">
+
+    <label class="block mt-2"><strong>Tipe Pesawat:</strong></label>
+    <input type="text" value="{{ $aircraft->aircraft_type }}" 
+           class="aircraft-edit border border-gray-300 p-1 w-full text-xs"
+           data-id="{{ $aircraft->id }}" data-field="aircraft_type">
+
+    <label class="block mt-2"><strong>Registrasi:</strong></label>
+    <input type="text" value="{{ $aircraft->registration }}" 
+           class="aircraft-edit border border-gray-300 p-1 w-full text-xs"
+           data-id="{{ $aircraft->id }}" data-field="registration">
+
+    <label class="block mt-2"><strong>Customer:</strong></label>
+    <input type="text" value="{{ $aircraft->customer }}" 
+           class="aircraft-edit border border-gray-300 p-1 w-full text-xs"
+           data-id="{{ $aircraft->id }}" data-field="customer">
+
+    <div class="mt-4">
+        <img src="{{ asset('storage/' . $aircraft->image) }}" alt="Gambar Pesawat" class="w-48 h-auto rounded">
     </div>
+</div>
+
 
     <!-- Engineering Orders -->
     <div class="bg-white shadow-md rounded-lg p-6 mt-6 text-sm">
@@ -90,9 +109,6 @@
         <a href="{{ route('admin.aircrafts.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-800">
             Kembali
         </a>
-        <button id="save-all" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">
-            Simpan Perubahan
-        </button>
     </div>
 </div>
 <!-- MODAL FORM -->
@@ -228,6 +244,28 @@ document.getElementById("add-order").addEventListener("click", function () {
     .catch(error => {
         console.error("Error:", error);
         alert("Terjadi kesalahan saat menyimpan data.");
+    });
+});
+
+document.querySelectorAll(".aircraft-edit").forEach(input => {
+    input.addEventListener("change", function () {
+        let aircraftId = this.dataset.id;
+        let field = this.dataset.field;
+        let value = this.value.trim();
+
+        fetch(`/admin/aircrafts/${aircraftId}/update`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ field, value })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Data berhasil diperbarui!");
+        })
+        .catch(error => console.log("Error:", error));
     });
 });
 

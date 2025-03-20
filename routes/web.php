@@ -124,3 +124,4 @@ Route::get('/admin/aircrafts/{id}/detail', [AdminAircraftController::class, 'sho
 Route::post('/admin/orders/{id}/update', [EngineeringOrderController::class, 'update'])->name('orders.update');
 Route::post('/admin/orders/{id}/delete', [EngineeringOrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/admin/orders/store', [EngineeringOrderController::class, 'store']);
+Route::post('/admin/aircrafts/{id}/update', [AdminAircraftController::class, 'updateAircraft']);

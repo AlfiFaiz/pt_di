@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center">
                 <div class="relative w-full max-w-lg">
-                    <input type="text" placeholder="Cari data yang diinginkan.." class="w-full p-2 rounded border">
+                   
                 </div>
                 <div class="relative">
                     <button id="userDropdown" class="bg-blue-500 text-white p-2 rounded flex items-center space-x-2 focus:outline-none">

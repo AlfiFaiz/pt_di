@@ -86,5 +86,19 @@ class AdminAircraftController extends Controller {
     
         return view('auth/admin/aircrafts/detail', compact('aircraft', 'orders'));
     }
+    public function updateAircraft(Request $request, $id)
+{
+    $aircraft = AircraftProgram::findOrFail($id);
+
+    // Jika value kosong, simpan sebagai NULL
+    $value = $request->value === "" ? null : $request->value;
+
+    $aircraft->update([
+        $request->field => $value
+    ]);
+
+    return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui']);
+}
+
     
 }
