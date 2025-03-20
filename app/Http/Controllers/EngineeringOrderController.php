@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AircraftProgram;
+use App\Models\EngineeringOrder;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class EngineeringOrderController extends Controller
@@ -24,4 +25,21 @@ class EngineeringOrderController extends Controller
 
         return $pdf->download('engineering_orders.pdf');
     }
+      // Update Engineering Order
+      public function update(Request $request, $id)
+      {
+          $order = EngineeringOrder::findOrFail($id);
+          $order->update([$request->field => $request->value]);
+  
+          return response()->json(['message' => 'Data berhasil diperbarui!']);
+      }
+  
+      // Hapus Engineering Order
+      public function destroy($id)
+      {
+          $order = EngineeringOrder::findOrFail($id);
+          $order->delete();
+  
+          return response()->json(['message' => 'Data berhasil dihapus!']);
+      }
 }

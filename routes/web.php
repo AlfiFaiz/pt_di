@@ -120,3 +120,6 @@ Route::get('/project/{id}', function ($id) {
 Route::get('/engineering-orders/pdf/{id}', [EngineeringOrderController::class, 'downloadPDF'])->name('engineering-orders.pdf');
 
 Route::get('/admin/aircrafts/{id}/detail', [AdminAircraftController::class, 'show'])->name('admin.aircrafts.detail');
+
+Route::post('/admin/orders/{id}/update', [EngineeringOrderController::class, 'update'])->name('orders.update');
+Route::post('/admin/orders/{id}/delete', [EngineeringOrderController::class, 'destroy'])->name('orders.destroy');

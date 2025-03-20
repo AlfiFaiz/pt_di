@@ -92,40 +92,41 @@
 
 <!-- AJAX Update -->
 <script>
-    document.querySelectorAll(".editable").forEach(input => {
-        input.addEventListener("change", function () {
-            let orderId = this.dataset.id;
-            let field = this.dataset.field;
-            let value = this.value;
+  document.querySelectorAll(".editable").forEach(input => {
+    input.addEventListener("change", function () {
+        let orderId = this.dataset.id;
+        let field = this.dataset.field;
+        let value = this.value;
 
-            fetch(`/admin/orders/${orderId}/update`, {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ field, value })
-            }).then(response => response.json()).then(data => {
-                console.log("Update berhasil:", data);
-            }).catch(error => console.log("Error:", error));
-        });
+        fetch(`/admin/orders/${orderId}/update`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ field, value })
+        }).then(response => response.json()).then(data => {
+            alert("Data berhasil diperbarui!");
+            console.log("Update berhasil:", data);
+        }).catch(error => console.log("Error:", error));
     });
+});
 
-    document.querySelectorAll(".delete-order").forEach(button => {
-        button.addEventListener("click", function () {
-            let orderId = this.dataset.id;
+document.querySelectorAll(".delete-order").forEach(button => {
+    button.addEventListener("click", function () {
+        let orderId = this.dataset.id;
+        
+        if (!confirm("Apakah Anda yakin ingin menghapus data ini?")) return;
 
-            fetch(`/admin/orders/${orderId}/delete`, {
-                method: "POST",
-                headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" }
-            }).then(() => {
-                this.closest("tr").remove();
-            });
-        });
+        fetch(`/admin/orders/${orderId}/delete`, {
+            method: "POST",
+            headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" }
+        }).then(response => response.json()).then(data => {
+            alert("Data berhasil dihapus!");
+            this.closest("tr").remove();
+        }).catch(error => console.log("Error:", error));
     });
+});
 
-    document.getElementById("save-all").addEventListener("click", function () {
-        alert("Perubahan telah disimpan!");
-    });
 </script>
 @endsection
