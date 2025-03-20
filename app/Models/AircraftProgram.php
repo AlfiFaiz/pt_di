@@ -15,8 +15,9 @@ class AircraftProgram extends Model
 
     // Relasi ke EngineeringOrder
     public function engineeringOrders()
-    {
-        return $this->hasMany(EngineeringOrder::class, 'aircraft_id');
-    }
+{
+    return $this->hasMany(EngineeringOrder::class, 'aircraft_id');
+}
+
 }
 

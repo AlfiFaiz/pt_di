@@ -22,7 +22,7 @@
                     <!-- Gambar & Progress -->
                     <div class="flex items-center gap-3">
                         <!-- Gambar -->
-                        <img src="{{ asset('storage/aircrafts/' . $program->image) }}" alt="Image" class="w-20 h-20 object-cover rounded-lg shadow-md">
+                        <img src="{{ asset('storage/' . $program->image) }}" alt="Image" class="w-20 h-20 object-cover rounded-lg shadow-md">
                         
                         <!-- Progress Bar -->
                         <div class="flex-1">
