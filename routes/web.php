@@ -119,3 +119,4 @@ Route::get('/project/{id}', function ($id) {
 
 Route::get('/engineering-orders/pdf/{id}', [EngineeringOrderController::class, 'downloadPDF'])->name('engineering-orders.pdf');
 
+Route::get('/admin/aircrafts/{id}/detail', [AdminAircraftController::class, 'show'])->name('admin.aircrafts.detail');

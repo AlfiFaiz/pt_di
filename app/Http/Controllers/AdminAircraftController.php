@@ -80,4 +80,11 @@ class AdminAircraftController extends Controller {
         $aircraft->delete();
         return redirect()->route('admin.aircrafts.index')->with('success', 'Data berhasil dihapus!');
     }
+    public function show($id) {
+        $aircraft = AircraftProgram::findOrFail($id);
+        $orders = $aircraft->engineeringOrders; // Ambil semua Engineering Order terkait
+    
+        return view('auth/admin/aircrafts/detail', compact('aircraft', 'orders'));
+    }
+    
 }

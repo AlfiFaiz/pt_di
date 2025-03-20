@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2025 at 07:34 AM
+-- Generation Time: Mar 20, 2025 at 01:00 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -44,11 +44,12 @@ CREATE TABLE `aircraft_programs` (
 
 INSERT INTO `aircraft_programs` (`id`, `program`, `aircraft_type`, `registration`, `customer`, `image`, `created_at`, `updated_at`) VALUES
 (1, 'Boeing 737 MAX', 'Boeing 737', 'PK-ABC', 'Garuda Indonesia', 'boeing737max.jpeg', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
-(2, 'Airbus A320 Neo', 'Airbus A320', 'PK-DEF', 'Lion Air', 'default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
-(3, 'Boeing 787 Dreamliner', 'Boeing 787', 'PK-GHI', 'Batik Air', 'default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
-(4, 'Airbus A350', 'Airbus A350', 'PK-JKL', 'Singapore Airlines', 'default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
-(5, 'ATR 72-600', 'ATR 72', 'PK-MNO', 'Wings Air', 'default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
-(21, 'aaa', 'aaa', 'dsdd', 'ff', 'default.jpg', '2025-03-19 23:00:55', '2025-03-19 23:00:55');
+(2, 'Airbus A320 Neo', 'Airbus A320', 'PK-DEF', 'Lion Air', 'aircrafts/default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
+(3, 'Boeing 787 Dreamliner', 'Boeing 787', 'PK-GHI', 'Batik Air', 'aircrafts/default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
+(4, 'Airbus A350', 'Airbus A350', 'PK-JKL', 'Singapore Airlines', 'aircrafts/default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
+(5, 'ATR 72-600', 'ATR 72', 'PK-MNO', 'Wings Air', 'aircrafts/default.png', '2025-03-19 04:33:37', '2025-03-19 04:33:37'),
+(25, 'aa', 'cc', 'vv', 'vv', 'aircrafts/default.png', '2025-03-19 23:52:57', '2025-03-19 23:52:57'),
+(26, 'tes', 'apa', '111', 'au', 'aircrafts/Rf6H2ZAX2eRXDfP0BgOUTBJ12FoSd3h21tII34rb.png', '2025-03-20 00:02:39', '2025-03-20 00:02:39');
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,10 @@ INSERT INTO `engineering_orders` (`id`, `aircraft_id`, `engineering_order_no`, `
 (55, 2, 'EO-026-38-017', 'ENGINE FUNCTION CHECK', '2023-10-21', '2023-10-23', 'Customizing Functional Test', 'G-15', '2025-03-20 04:37:36', '2025-03-20 04:37:36'),
 (56, 2, 'EO-026-38-018', 'FINAL INSPECTION', '2023-10-24', '2023-10-26', 'Maintenance', 'G-15', '2025-03-20 04:37:36', '2025-03-20 04:37:36'),
 (57, 2, 'EO-026-38-019', 'TEST FLIGHT PREPARATION', '2023-10-27', '2023-10-29', 'Flight Line', 'G-15', '2025-03-20 04:37:36', '2025-03-20 04:37:36'),
-(58, 1, 'EO-025-38-000', 'PREPARATION AND RECEIVE THE AIRCRAFT', '2023-08-04', '2023-08-06', 'Basic Re-assy and Functional Test', 'G-15', '2025-03-19 20:31:49', '2025-03-19 20:31:49');
+(58, 1, 'EO-025-38-000', 'PREPARATION AND RECEIVE THE AIRCRAFT', '2023-08-04', '2023-08-06', 'Basic Re-assy and Functional Test', 'G-15', '2025-03-19 20:31:49', '2025-03-19 20:31:49'),
+(59, 25, 'a', 'c', '2025-03-21', NULL, 'Basic Re-assy and Functional Test', NULL, '2025-03-19 23:52:57', '2025-03-19 23:52:57'),
+(60, 26, 'kkkk', 'aaa', '2025-03-18', NULL, 'Basic Re-assy and Functional Test', NULL, '2025-03-20 00:02:39', '2025-03-20 00:02:39'),
+(61, 26, 'kkkkaa', 'aaaxx', '2025-03-21', NULL, 'Basic Re-assy and Functional Test', NULL, '2025-03-20 00:02:39', '2025-03-20 00:02:39');
 
 -- --------------------------------------------------------
 
@@ -357,13 +361,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `aircraft_programs`
 --
 ALTER TABLE `aircraft_programs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `engineering_orders`
 --
 ALTER TABLE `engineering_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`

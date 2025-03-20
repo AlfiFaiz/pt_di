@@ -4,7 +4,15 @@
 @section('content')
 <div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
     <div class="container mx-auto px-4 md:px-6 lg:px-12 py-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        
+        <!-- Search Bar -->
+        <div class="mb-6">
+            <input type="text" id="searchInput" placeholder="Cari pesawat..." 
+                class="w-full p-3 border border-gray-400 rounded-lg focus:ring focus:ring-blue-300" 
+                onkeyup="searchAircrafts()">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="aircraftContainer">
             @php
                 use App\Models\EngineeringOrder;
             @endphp
@@ -18,7 +26,12 @@
                     $progressPercentage = ($totalOrders > 0) ? round(($completedOrders / $totalOrders) * 100, 2) : 0;
                 @endphp
 
-                <div class="bg-blue-900 bg-opacity-80 shadow-md rounded-lg p-3 flex flex-col gap-3">
+                <div class="bg-blue-900 bg-opacity-80 shadow-md rounded-lg p-3 flex flex-col gap-3 aircraft-item"
+                    data-program="{{ strtolower($program->program) }}"
+                    data-type="{{ strtolower($program->aircraft_type) }}"
+                    data-registration="{{ strtolower($program->registration) }}"
+                    data-customer="{{ strtolower($program->customer) }}">
+                    
                     <!-- Gambar & Progress -->
                     <div class="flex items-center gap-3">
                         <!-- Gambar -->
@@ -49,4 +62,25 @@
         </div>
     </div>
 </div>
+
+<!-- SCRIPT SEARCH -->
+<script>
+    function searchAircrafts() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let aircrafts = document.querySelectorAll(".aircraft-item");
+
+        aircrafts.forEach(aircraft => {
+            let program = aircraft.getAttribute("data-program");
+            let type = aircraft.getAttribute("data-type");
+            let registration = aircraft.getAttribute("data-registration");
+            let customer = aircraft.getAttribute("data-customer");
+
+            if (program.includes(input) || type.includes(input) || registration.includes(input) || customer.includes(input)) {
+                aircraft.style.display = "block";
+            } else {
+                aircraft.style.display = "none";
+            }
+        });
+    }
+</script>
 @endsection
