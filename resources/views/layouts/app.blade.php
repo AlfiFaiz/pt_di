@@ -14,9 +14,44 @@
 
 </head>
 <body class="bg-gray-100">
-    
+    <!-- Global Loading Overlay -->
+<div id="pageLoader" class="fixed inset-0 bg-white z-[9999] flex items-center justify-center hidden">
+    <div class="text-white text-center">
+        <div class="flex flex-col items-center">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" "> <!-- Logo kamu -->
+            <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+        <p class=" text-black">Sedang memuat halaman...</p>
+    </div>
+</div>
+
     @yield('content')
 
     <x-footer />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loader = document.getElementById("pageLoader");
+    
+            // Show loader on link click
+            document.querySelectorAll("a[href]").forEach(link => {
+                link.addEventListener("click", function (e) {
+                    const href = link.getAttribute("href");
+    
+                    // Cek agar tidak buka tab baru atau scroll to anchor
+                    if (href && !href.startsWith('#') && !link.hasAttribute('target')) {
+                        loader.classList.remove("hidden");
+                    }
+                });
+            });
+    
+            // Show loader on form submit
+            document.querySelectorAll("form").forEach(form => {
+                form.addEventListener("submit", function () {
+                    loader.classList.remove("hidden");
+                });
+            });
+        });
+    </script>
+    
 </body>
 </html>

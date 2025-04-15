@@ -118,6 +118,16 @@
 
     <!-- Tombol Simpan & Kembali -->
     <div class="flex justify-between mt-6">
+        <form id="deleteForm" method="POST" action="{{ route('admin.aircrafts.destroy', $aircraft->id) }}">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded" 
+                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                Hapus
+            </button>
+        </form>
+        
+        
         <a href="{{ route('admin.aircrafts.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-800">
             Kembali
         </a>
@@ -141,6 +151,7 @@
         </select>
 
         <div class="flex justify-end">
+    
             <button id="close-modal" class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Batal</button>
             <button id="add-order" class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
         </div>
@@ -150,6 +161,8 @@
 
 <!-- AJAX Update -->
 <script>
+ 
+
   document.querySelectorAll(".editable").forEach(input => {
     input.addEventListener("change", function () {
         let orderId = this.dataset.id;
@@ -185,6 +198,8 @@ document.querySelectorAll(".delete-order").forEach(button => {
         }).catch(error => console.log("Error:", error));
     });
 });
+
+
 
 document.getElementById("open-modal").addEventListener("click", function () {
     document.getElementById("modal").classList.remove("hidden");
@@ -282,6 +297,9 @@ document.querySelectorAll(".aircraft-edit").forEach(input => {
 });
 
 
-
+function confirmDelete(id) {
+            document.getElementById('deleteForm').action = "/admin/aircrafts/" +  id + "/delete";
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
 </script>
 @endsection

@@ -32,7 +32,10 @@ class AdminAircraftController extends Controller {
     
         if ($request->hasFile('gambar')) {
             $data['image'] = $request->file('gambar')->store('aircrafts', 'public');
-        }
+        } else {
+        // Default jika gambar tidak diupload
+        $data['image'] = 'aircrafts/default.png';
+    }
     
         $aircraft = AircraftProgram::create($data);
     
