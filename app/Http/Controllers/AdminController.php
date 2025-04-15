@@ -26,7 +26,7 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('auth/admin/users')->with('success', 'Akun berhasil dihapus.');
+        return redirect()->route('admin.users')->with('success', 'Akun berhasil dihapus.');
     }
 
     public function updateRole(Request $request, $id)

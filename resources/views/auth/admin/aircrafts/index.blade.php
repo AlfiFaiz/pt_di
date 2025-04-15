@@ -22,11 +22,22 @@
                             <th class="border px-4 py-2">Registrasi</th>
                             <th class="border px-4 py-2">Customer</th>
                             <th class="border px-4 py-2">Gambar</th>
-                            <th class="border px-4 py-2">Aksi</th>
+                            <th class="border px-4 py-2">progres</th>
+                            <th class="border px-4 py-2">aksi</th>
                         </tr>
                     </thead>
+                    @php
+                    use App\Models\EngineeringOrder;
+                @endphp
                     <tbody>
                         @foreach($aircrafts as $aircraft)
+                        @php
+                        // Hitung progress
+                        $orders = EngineeringOrder::where('aircraft_id', $aircraft->id)->get();
+                        $totalOrders = $orders->count();
+                        $completedOrders = $orders->whereNotNull('finish_date')->whereNotNull('insp_stamp')->count();
+                        $progressPercentage = ($totalOrders > 0) ? round(($completedOrders / $totalOrders) * 100, 2) : 0;
+                    @endphp
                         <tr>
                             <td class="border px-4 py-2">{{ $aircraft->program }}</td>
                             <td class="border px-4 py-2">{{ $aircraft->aircraft_type }}</td>
@@ -38,6 +49,14 @@
                                 @else
                                     Tidak ada gambar
                                 @endif
+                            </td>
+                            <td class="border px-4 py-2">
+                                <div class="flex-1">
+                                    <div class="w-full bg-gray-700 rounded-full h-4">
+                                        <div class="bg-green-500 h-4 rounded-full transition-all duration-300" style="width: {{ $progressPercentage }}%;"></div>
+                                    </div>
+                                    <p class="text-xs text-black mt-1 text-right">{{ $progressPercentage }}%</p>
+                                </div>
                             </td>
                                 <td class="border px-4 py-2">
                                     <a href="{{ route('admin.aircrafts.detail', $aircraft->id) }}" class="bg-black text-white px-3 py-1 rounded">Detail</a>

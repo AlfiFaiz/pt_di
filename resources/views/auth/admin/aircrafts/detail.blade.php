@@ -33,17 +33,29 @@
         <img src="{{ asset('storage/' . $aircraft->image) }}" alt="Gambar Pesawat" class="w-48 h-auto rounded">
     </div>
 </div>
+<!-- Engineering Orders -->
+<div class="bg-white shadow-md rounded-lg p-6 mt-6 text-sm">
+    <h3 class="text-lg font-bold mb-4">Engineering Orders</h3>
+    <!-- Tombol Tambah Data -->
+    <button id="open-modal" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800 mb-4">
+        Tambah Data
+    </button>
+    
+    @php
+       
+    $totalOrders = $orders->count();
+    $completedOrders = $orders->whereNotNull('finish_date')->whereNotNull('insp_stamp')->count();
+    $progressPercentage = ($totalOrders > 0) ? round(($completedOrders / $totalOrders) * 100, 2) : 0;
+    @endphp
+    
+    <div class="flex-1">
+    <div class="w-full bg-gray-700 rounded-full h-4">
+    <div class="bg-green-500 h-4 rounded-full transition-all duration-300" style="width: {{ $progressPercentage }}%;"></div>
+    </div>
+    <p class="text-xs text-black mt-1 text-right">{{ $progressPercentage }}%</p>
+    </div>
 
-
-    <!-- Engineering Orders -->
-    <div class="bg-white shadow-md rounded-lg p-6 mt-6 text-sm">
-        <h3 class="text-lg font-bold mb-4">Engineering Orders</h3>
-        <!-- Tombol Tambah Data -->
-<button id="open-modal" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800 mb-4">
-    Tambah Data
-</button>
-
-
+<br>
         <div class="overflow-auto max-h-[400px] border border-gray-300 p-2">
             @foreach ($orders->groupBy('type_order') as $type => $group)
                 <!-- Header Type Order -->
@@ -268,6 +280,8 @@ document.querySelectorAll(".aircraft-edit").forEach(input => {
         .catch(error => console.log("Error:", error));
     });
 });
+
+
 
 </script>
 @endsection
