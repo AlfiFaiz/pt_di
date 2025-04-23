@@ -19,8 +19,9 @@ class Form extends Model
         'amend',
         'affected_function',
         'type',
-        'file_path',
+        'file_path', // <- pastikan ini juga ada
     ];
 }
+
 
 

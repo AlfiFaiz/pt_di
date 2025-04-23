@@ -8,6 +8,11 @@
     <!-- Main Content -->
     <div class="flex-1 p-6 overflow-x-auto">
         @include('components.headeradmin')
+        @if(session('success'))
+    <div class="mb-4 px-4 py-3 bg-green-100 text-green-800 rounded shadow">
+        {{ session('success') }}
+    </div>
+@endif
 
         <div class="p-6">
             <h2 class="text-2xl font-bold">FORM</h2>

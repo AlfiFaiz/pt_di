@@ -25,28 +25,34 @@ $forms = Form::paginate($limit == 'all' ? Form::count() : $limit);
 
     // Menyimpan form ke database
    
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'nomor' => 'required|string|max:255',
-        'judul' => 'required|string|max:255',
-        'date_issued' => 'required|date',
-        'org' => 'required|string',
-        'rev' => 'required|integer',
-        'amend' => 'nullable|integer',
-        'affected_function' => 'required|string',
-        'type' => 'required|string',
-        'file' => 'required|file|mimes:pdf,docx,doc|max:2048'
-    ]);
-
-    if ($request->hasFile('file')) {
-        $validated['file_path'] = $request->file('file')->store('qms_forms', 'public');
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nomor' => 'required|string|max:255',
+            'judul' => 'required|string|max:255',
+            'date_issued' => 'required|date',
+            'org' => 'required|string',
+            'rev' => 'required|integer',
+            'amend' => 'nullable|integer',
+            'affected_function' => 'required|string',
+            'type' => 'required|string',
+            'file' => 'required|file|mimes:pdf,docx,doc,jpg,jpeg,png|max:2048'
+        ]);
+    
+        if ($request->hasFile('file')) {
+            $validated['file_path'] = $request->file('file')->store('qms', 'public');
+        } else {
+            dd('File tidak berhasil di-upload');
+        }
+    
+        // dd($validated); // cek isinya
+    
+        Form::create($validated);
+    
+        return redirect()->route('admin.qms.form')->with('success', 'Form berhasil disimpan!');
     }
-
-    Form::create($validated);
-
-    return redirect()->route('admin.qms.form')->with('success', 'Form berhasil disimpan!');
-}
+    
+    
 
     // Menampilkan halaman edit form
     public function edit(Form $form)
