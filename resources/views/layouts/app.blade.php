@@ -18,7 +18,7 @@
 <div id="pageLoader" class="fixed inset-0 bg-white z-[9999] flex items-center justify-center hidden">
     <div class="text-white text-center">
         <div class="flex flex-col items-center">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" "> <!-- Logo kamu -->
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" "> 
             <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
         <p class=" text-black">Sedang memuat halaman...</p>

@@ -8,6 +8,8 @@ class Form extends Model
 {
     use HasFactory;
 
+    protected $table = 'forms'; // kalau kamu mau pastikan manual
+
     protected $fillable = [
         'nomor',
         'judul',
@@ -16,10 +18,9 @@ class Form extends Model
         'rev',
         'amend',
         'affected_function',
-        'type', // Pastikan ini ada
+        'type',
         'file_path',
     ];
-    
-    
 }
+
 

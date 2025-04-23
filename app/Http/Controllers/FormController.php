@@ -24,41 +24,29 @@ $forms = Form::paginate($limit == 'all' ? Form::count() : $limit);
     }
 
     // Menyimpan form ke database
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nomor' => 'required|string|max:255',
-            'judul' => 'required|string|max:255',
-            'date_issued' => 'required|date',
-            'org' => 'required|string|max:255',
-            'rev' => 'required|integer',
-            'amend' => 'nullable|integer',
-            'affected_function' => 'required|string|max:255',
-            'type' => 'required|string|in:FORM,MANUAL,PROCEDURE,WORK INSTRUCTION,PERSONAL ROSTER,TRAINING',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
-        ]);
+   
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nomor' => 'required|string|max:255',
+        'judul' => 'required|string|max:255',
+        'date_issued' => 'required|date',
+        'org' => 'required|string',
+        'rev' => 'required|integer',
+        'amend' => 'nullable|integer',
+        'affected_function' => 'required|string',
+        'type' => 'required|string',
+        'file' => 'required|file|mimes:pdf,docx,doc|max:2048'
+    ]);
 
-        // Simpan file ke storage
-        $filePath = null;
-        if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('qms', 'public');
-        }
-
-        // Simpan data ke database
-        Form::create([
-            'nomor' => $request->nomor,
-            'judul' => $request->judul,
-            'date_issued' => $request->date_issued,
-            'org' => $request->org,
-            'rev' => $request->rev,
-            'amend' => $request->amend,
-            'affected_function' => $request->affected_function,
-            'type' => $request->type,
-            'file_path' => $filePath,
-        ]);
-
-        return redirect()->route('admin.qms.form')->with('success', 'Form berhasil ditambahkan!');
+    if ($request->hasFile('file')) {
+        $validated['file_path'] = $request->file('file')->store('qms_forms', 'public');
     }
+
+    Form::create($validated);
+
+    return redirect()->route('admin.qms.form')->with('success', 'Form berhasil disimpan!');
+}
 
     // Menampilkan halaman edit form
     public function edit(Form $form)
