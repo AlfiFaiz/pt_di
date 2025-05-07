@@ -29,28 +29,35 @@
 
     <x-footer />
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const loader = document.getElementById("pageLoader");
-    
-            // Show loader on link click
-            document.querySelectorAll("a[href]").forEach(link => {
-                link.addEventListener("click", function (e) {
-                    const href = link.getAttribute("href");
-    
-                    // Cek agar tidak buka tab baru atau scroll to anchor
-                    if (href && !href.startsWith('#') && !link.hasAttribute('target')) {
-                        loader.classList.remove("hidden");
-                    }
-                });
-            });
-    
-            // Show loader on form submit
-            document.querySelectorAll("form").forEach(form => {
-                form.addEventListener("submit", function () {
+    document.addEventListener("DOMContentLoaded", function () {
+        const loader = document.getElementById("pageLoader");
+        const excludedPaths = ['{{ route('login') }}', '{{ route('register') }}'];
+
+        if (excludedPaths.includes(window.location.href)) {
+            return;
+        }
+
+        // Show loader on link click
+        document.querySelectorAll("a[href]").forEach(link => {
+            link.addEventListener("click", function (e) {
+                const href = link.getAttribute("href");
+                if (href && !href.startsWith('#') && !link.hasAttribute('target')) {
                     loader.classList.remove("hidden");
-                });
+                }
             });
         });
+
+        // Show loader on form submit
+        document.querySelectorAll("form").forEach(form => {
+            form.addEventListener("submit", function () {
+                loader.classList.remove("hidden");
+            });
+        });
+    });
+
+
+        
+       
     </script>
     
 </body>

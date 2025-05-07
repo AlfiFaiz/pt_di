@@ -14,11 +14,17 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
+    
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
-            // Cek role dan redirect ke halaman yang sesuai
+    
+            // Cek apakah user sudah disetujui oleh admin
+            if (!$user->is_approved) {
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Akun Anda belum disetujui oleh admin.');
+            }
+    
+            // Cek role dan redirect
             if ($user->role === 'admin') {
                 return redirect()->route('auth.admin.dashboard');
             } elseif ($user->role === 'customer') {
@@ -28,7 +34,8 @@ class LoginController extends Controller
                 return redirect()->route('login')->with('error', 'Akun tidak memiliki role yang valid.');
             }
         }
-
+    
         return redirect()->route('login')->with('error', 'Email atau password salah.');
     }
+    
 }

@@ -21,6 +21,11 @@ class AdminController extends Controller
         $users = User::all();
         return view('auth/admin/users', compact('users'));
     }
+    public function manageUsers1()
+    {
+        $users = User::all();
+        return view('auth/admin/belumdisetujui', compact('users'));
+    }
 
     public function deleteUser($id)
     {
@@ -54,6 +59,15 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'Data berhasil diperbarui.');
     }
     
+    public function approveUser($id)
+{
+    $user = User::findOrFail($id);
+    $user->is_approved = true;
+    $user->save();
+
+    return redirect()->route('admin.users')->with('success', 'Akun berhasil disetujui.');
+}
+
     
     
     

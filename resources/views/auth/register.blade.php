@@ -25,53 +25,83 @@
             }
         </script>
         @endif
-       @if ($errors->any())
-    <div class="bg-red-500 text-white p-3 rounded-lg mb-4">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        @if ($errors->any())
+        <div class="bg-red-500 text-white p-3 rounded-lg mb-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 
-<form action="{{ route('register') }}" method="POST" class="mt-4">
-    @csrf
-    <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-        <input type="text" id="name" name="name" value="{{ old('name') }}" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
-        @error('name')
-            <p class="text-red-500 text-sm">{{ $message }}</p>
-        @enderror
-    </div>
+        <form action="{{ route('register') }}" method="POST" class="mt-4" onsubmit="return validatePassword()">
+            @csrf
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                <input type="text" id="name" name="name" value="{{ old('name') }}" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
+                @error('name')
+                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
 
-    <div class="mb-4">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="email" name="email" value="{{ old('email') }}" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
-        @error('email')
-            <p class="text-red-500 text-sm">{{ $message }}</p>
-        @enderror
-    </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
+                @error('email')
+                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
 
-    <div class="mb-4">
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
-        @error('password')
-            <p class="text-red-500 text-sm">{{ $message }}</p>
-        @enderror
-    </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" onkeyup="validatePassword()">
+                <p id="passwordHelp" class="text-sm text-gray-500">Password harus mengandung Huruf Kapital, angka dan simbol.</p>
+                @error('password')
+                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
 
-    <div class="mb-4">
-        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Password</label>
-        <input type="password" id="password_confirmation" name="password_confirmation" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
-    </div>
+            <div class="mb-4">
+                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" onkeyup="checkPasswordMatch()">
+                <p id="confirmationHelp" class="text-sm text-gray-500">Password konfirmasi harus sama dengan password di atas.</p>
+            </div>
 
-    <div class="mt-6">
-        <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700">Daftar</button>
-        <a href="{{ url('/') }}" class="w-full block mt-2 bg-green-600 text-white text-center font-semibold py-2 rounded-lg hover:bg-green-700">HOME</a>
+            <div class="mt-6">
+                <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700">Daftar</button>
+                <a href="{{ url('/') }}" class="w-full block mt-2 bg-green-600 text-white text-center font-semibold py-2 rounded-lg hover:bg-green-700">HOME</a>
+            </div>
+        </form>
     </div>
-</form>
 </div>
-</div>
+
+<script>
+    function validatePassword() {
+        var password = document.getElementById('password').value;
+        var passwordHelp = document.getElementById('passwordHelp');
+        var regex = /(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])/;
+        
+        if (!regex.test(password)) {
+            passwordHelp.style.color = 'red';
+        } else {
+            passwordHelp.style.color = 'green';
+        }
+    }
+
+    function checkPasswordMatch() {
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('password_confirmation').value;
+        var confirmationHelp = document.getElementById('confirmationHelp');
+
+        if (password === confirmPassword) {
+            document.getElementById('password_confirmation').style.borderColor = 'green';
+            confirmationHelp.style.color = 'green';
+        } else {
+            document.getElementById('password_confirmation').style.borderColor = 'red';
+            confirmationHelp.style.color = 'red';
+        }
+    }
+</script>
 
 @endsection

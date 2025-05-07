@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AircraftProgramController;
 use App\Http\Controllers\EngineeringOrderController;
+
+
+
+
 // Halaman utama
 Route::get('/', function () {
     return view('home');
@@ -63,6 +67,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/users/{id}/delete', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     Route::post('/users/{id}/update-role', [AdminController::class, 'updateRole'])->name('admin.users.updateRole');
     Route::post('/users/{id}/edit', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::get('/belumdisetujui', [AdminController::class, 'manageUsers1'])->name('admin.belumdisetujui');
+
 });
 
 // CRUD QMS Form (Admin)
@@ -126,3 +132,5 @@ Route::post('/admin/orders/{id}/update', [EngineeringOrderController::class, 'up
 Route::post('/admin/orders/{id}/delete', [EngineeringOrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/admin/orders/store', [EngineeringOrderController::class, 'store']);
 Route::post('/admin/aircrafts/{id}/update', [AdminAircraftController::class, 'updateAircraft']);
+
+Route::post('/admin/approve-user/{id}', [AdminController::class, 'approveUser'])->name('admin.approve');

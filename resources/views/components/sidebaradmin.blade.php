@@ -46,12 +46,12 @@
                 </div>
                 <ul id="userMenu" class="ml-6 mt-2 hidden">
                     <li class="mb-2 flex items-center space-x-2">
-                        <span>🛠️</span>
-                        <a href="{{ route('admin.users') }}" class="hover:text-gray-300">Kelola Pengguna</a>
+                        <span></span>
+                        <a href="{{ route('admin.users') }}" class="hover:text-gray-300">Disetujui</a>        
                     </li>
                     <li class="mb-2 flex items-center space-x-2">
-                        <span>➕</span>
-                        <a href="#" class="hover:text-gray-300">Tambah Akun</a>
+                        <span></span>
+                        <a href="{{ route('admin.belumdisetujui') }}" class="hover:text-gray-300">Belum disetujui</a>
                     </li>
                 </ul>
             </li>

@@ -24,42 +24,45 @@
                         {{ session('success') }}
                     </div>
                 @endif
+<!-- Tabel Pengguna Belum Disetujui -->
+<div class="mt-6 bg-white p-4 shadow rounded-lg">
+    <h3 class="font-semibold text-lg mb-4">Belum Disetujui</h3>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-blue-600 text-white">
+                <th class="p-2 border">Nama</th>
+                <th class="p-2 border">Email</th>
+                <th class="p-2 border">Role</th>
+                <th class="p-2 border">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($users->where('is_approved', false) as $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->role }}</td>
+                    <td>
+                        <form action="{{ route('admin.approve', $user->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded">Setujui</button>
+                        </form>
+                        <button onclick="confirmDelete({{ $user->id }})" class="bg-red-500 text-white px-3 py-1 rounded">Hapus</button>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center text-gray-500 py-4">Tidak ada akun yang menunggu persetujuan.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 
-
-                <!-- Tabel Pengguna Disetujui -->
-                <div class="mt-6 bg-white p-4 shadow rounded-lg">
-                    <h3 class="font-semibold text-lg mb-4">Disetujui</h3>
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="bg-blue-600 text-white">
-                                <th class="p-2 border">Nama</th>
-                                <th class="p-2 border">Email</th>
-                                <th class="p-2 border">Role</th>
-                                <th class="p-2 border">Aksii</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users->where('is_approved', true) as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
-                                    <td>
-                                        <!-- Tombol Edit -->
-                                        <button onclick="openEditModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '{{ $user->role }}')" 
-                                            class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
-                                        <!-- Tombol Hapus -->
-                                        <button onclick="confirmDelete({{ $user->id }})" class="bg-red-500 text-white px-3 py-1 rounded">Hapus</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 </div>
+                
             </div>
-        </div>
-    </div>
-
+            </div>
     <!-- Modal Edit User -->
     <div id="editUserModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded shadow-lg w-96">
